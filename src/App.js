@@ -1,53 +1,30 @@
 import React, { Component } from 'react'
-import FormField from './form-field'
+import RegisterForm from './register-form'
 
 class App extends Component {
+
   state = {
-    fullName: '',
-    email: '',
-    password: '',
+    registered: false,
   }
 
-  handleChange = (e, attr) => {
-    this.setState({
-      [attr]: e.target.value,
-    })
-  }
+  onRegistered = () => this.setState({
+    registered: true,
+  })
 
+  renderRegistrationComplete = () => <div>
+    <h2>Your account has been registered!</h2>
+    <p>That is all for this example. In the next episode in the series we will add React Router (v4) and set up this example to have a log in page as well, and when you log in, we will get back an authorization token and save it on the client (this app) so that you can access special pages that are protected by the log in process!</p>
+  </div>
+  
   render() {
-    const { fullName, email, password } = this.state
-
-    return <form>
-      <h1>Register today</h1>
-
-      <FormField
-        attr='fullName'
-        type='text'
-        label='Full name'
-        value={fullName}
-        handleChange={this.handleChange}
-      />
-
-      <FormField
-        attr='email'
-        type='text'
-        label='Email'
-        value={email}
-        handleChange={this.handleChange}
-      />
-
-      <FormField
-        attr='password'
-        type='text'
-        label='Password'
-        value={password}
-        handleChange={this.handleChange}
-      />
-
-      <div>
-        <button>Sign up!</button>
-      </div>
-    </form>
+    const { registered } = this.state
+    return <div className="container">
+      {
+        registered
+          ? this.renderRegistrationComplete()
+          : <RegisterForm registrationComplete={this.onRegistered} />
+      }
+    </div>
   }
 }
 
